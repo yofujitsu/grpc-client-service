@@ -1,10 +1,19 @@
+buildscript {
+    ext {
+        protobufVersion = '3.25.1'
+        protobufPluginVersion = '0.8.18'
+        grpcVersion = '1.58.0'
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.google.protobuf' version "${protobufPluginVersion}"
 }
 
-group = 'org.startmakers'
+group = 'com.yofujitsu'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -30,7 +39,35 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.mapstruct:mapstruct:1.6.0'
+    implementation 'org.mapstruct:mapstruct-processor:1.6.0'
+    implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
+    implementation 'net.devh:grpc-client-spring-boot-starter:3.1.0.RELEASE'
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    generatedFilesBaseDir = "$projectDir/src/generated"
+    clean {
+        delete generatedFilesBaseDir
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()

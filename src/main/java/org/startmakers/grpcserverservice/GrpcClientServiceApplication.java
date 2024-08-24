@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GrpcServerServiceApplication {
+public class GrpcClientServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GrpcServerServiceApplication.class, args);
+        SpringApplication.run(GrpcClientServiceApplication.class, args);
     }
 
 }
