@@ -1,3 +1,16 @@
 spring:
-  application:
-    name: grpc-client-service
+  config:
+    import: optional:file:.env[.properties]
+
+server:
+  port:
+    8081
+
+grpc:
+  client:
+    GLOBAL:
+      address: ${GRPC_ADDRESS}
+      negotiation-type: ${GRPC_NEGOTIATION_TYPE}
+
+push:
+  batch-size: ${BATCH_SIZE}
