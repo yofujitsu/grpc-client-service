@@ -41,6 +41,7 @@ public class GRPCDataServiceImpl implements GRPCDataService {
                                 .toEpochSecond(ZoneOffset.UTC)) // Set the timestamp.
                         .build())
                 .setValueType(ValueType.valueOf(data.getValueType().name())) // Set the value type.
+                .setValue(data.getValue())
                 .build();
 
         // Send the data point to the gRPC server.
@@ -87,6 +88,7 @@ public class GRPCDataServiceImpl implements GRPCDataService {
                                     .toEpochSecond(ZoneOffset.UTC))
                             .build())
                     .setValueType(ValueType.valueOf(d.getValueType().name()))
+                    .setValue(d.getValue())
                     .build();
             requestObserver.onNext(request);
         }
